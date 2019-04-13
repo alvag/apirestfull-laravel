@@ -42,15 +42,6 @@ class User extends Authenticatable
         'verification_token',
     ];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
-
     public function esVerificado()
     {
         return $this->verified == User::USUARIO_VERIFICADO;
