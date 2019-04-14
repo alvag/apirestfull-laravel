@@ -1,7 +1,6 @@
 <?php
 
 use App\User;
-use Illuminate\Support\Str;
 use Faker\Generator as Faker;
 
 /*
@@ -22,5 +21,8 @@ $factory->define(User::class, function (Faker $faker) {
         'email_verified_at' => now(),
         'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
         'remember_token' => Str::random(10),
+        'verified' => $verified = $faker->randomElement([User::USUARIO_VERIFICADO, User::USUARIO_NO_VERIFICADO]),
+        'verification_token' => $verified == User::USUARIO_VERIFICADO ? null : User::getVerificationToken(),
+        'admin' => $faker->randomElement([User::USUARIO_ADMINISTRADOR, User::USUARIO_REGULAR]),
     ];
 });
