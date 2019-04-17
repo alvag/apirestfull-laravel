@@ -16,7 +16,7 @@ trait ApiResponser
 
     protected function errorResponse($message, $code = 400)
     {
-        return response()->json(['error' => $message, 'code' => $code]);
+        return response()->json(['error' => $message], $code);
     }
 
     protected function showAll(Collection $collection, $code = 200) {
