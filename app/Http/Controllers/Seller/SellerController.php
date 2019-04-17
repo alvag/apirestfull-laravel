@@ -27,7 +27,7 @@ class SellerController extends Controller
      */
     public function show($id)
     {
-        $seller = Seller::findOrFail($id);
+        $seller = Seller::has('products')->findOrFail($id);
         return $this->sendResponse($seller);
     }
 
