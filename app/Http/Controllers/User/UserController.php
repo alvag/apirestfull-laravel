@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Http\Controllers\ApiController;
 use App\User;
 use Exception;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Response;
 use Illuminate\Validation\ValidationException;
 
-class UserController extends Controller
+class UserController extends ApiController
 {
     /**
      * Display a listing of the resource.
@@ -18,7 +18,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        return $this->sendResponse(User::all());
+        return $this->showAll(User::all());
     }
 
     /**
@@ -48,7 +48,7 @@ class UserController extends Controller
         $user = User::create($fields);
         $user->save();
 
-        return $this->sendResponse($user, 'Usuario creado', 201);
+        return $this->showOne($user, 201);
     }
 
     /**
@@ -59,7 +59,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        return $this->sendResponse(User::findOrFail($id));
+        return $this->showOne(User::findOrFail($id));
     }
 
     /**
@@ -98,18 +98,18 @@ class UserController extends Controller
 
         if ($request->has('admin')) {
             if (!$user->esVerificado()) {
-                return $this->sendError('Para ser administrador debe verificar su cuenta.', null, 409);
+                return $this->errorResponse('Para ser administrador debe verificar su cuenta.', 409);
             }
             $user->admin = $request->admin;
         }
 
         if (!$user->isDirty()) {
-            return $this->sendError('Se debe especificar al menos un valor diferente para actualizar.', null, 422);
+            return $this->errorResponse('Se debe especificar al menos un valor diferente para actualizar.', 422);
         }
 
         $user->save();
 
-        return $this->sendResponse($user, 'Datos actualizados');
+        return $this->showOne($user);
 
     }
 
@@ -124,6 +124,6 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
         $user->delete();
-        return $this->sendResponse($user, 'Usuario eliminado');
+        return $this->showOne($user);
     }
 }

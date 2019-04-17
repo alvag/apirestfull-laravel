@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Seller;
 
+use App\Http\Controllers\ApiController;
 use App\Seller;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Response;
 
-class SellerController extends Controller
+class SellerController extends ApiController
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +16,7 @@ class SellerController extends Controller
     public function index()
     {
         $sellers = Seller::has('products')->get();
-        return $this->sendResponse($sellers);
+        return $this->showAll($sellers);
     }
 
     /**
@@ -28,7 +28,7 @@ class SellerController extends Controller
     public function show($id)
     {
         $seller = Seller::has('products')->findOrFail($id);
-        return $this->sendResponse($seller);
+        return $this->showOne($seller);
     }
 
 }
