@@ -5,6 +5,10 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * @property mixed seller_id
+ * @property mixed status
+ */
 class Product extends Model
 {
     use SoftDeletes;

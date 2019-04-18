@@ -7,6 +7,9 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Str;
 
+/**
+ * @property mixed id
+ */
 class User extends Authenticatable
 {
     use Notifiable, SoftDeletes;
