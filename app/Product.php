@@ -8,6 +8,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 /**
  * @property mixed seller_id
  * @property mixed status
+ * @property mixed transactions
+ * @property mixed categories
+ * @property mixed seller
+ * @property mixed quantity
+ * @property mixed id
  */
 class Product extends Model
 {

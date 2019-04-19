@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Observers\ProductObserver;
+use App\Product;
 use Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider;
 use Illuminate\Support\ServiceProvider;
 use Schema;
@@ -28,5 +30,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Schema::defaultStringLength(191);
+
+        Product::observe(ProductObserver::class);
     }
 }
