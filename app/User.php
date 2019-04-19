@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Transformers\UserTransformer;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -10,6 +11,12 @@ use Str;
 /**
  * @property mixed id
  * @property mixed email
+ * @property mixed verified
+ * @property mixed admin
+ * @property mixed created_at
+ * @property mixed updated_at
+ * @property mixed deleted_at
+ * @property mixed name
  */
 class User extends Authenticatable
 {
@@ -23,6 +30,8 @@ class User extends Authenticatable
 
     const USUARIO_ADMINISTRADOR = 'true';
     const USUARIO_REGULAR = 'false';
+
+    public $transformer = UserTransformer::class;
 
     /**
      * The attributes that are mass assignable.

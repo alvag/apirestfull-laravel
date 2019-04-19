@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Transformers\ProductTransformer;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -14,10 +15,16 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property mixed quantity
  * @property mixed id
  * @property mixed image
+ * @property mixed name
+ * @property mixed description
+ * @property mixed created_at
+ * @property mixed updated_at
  */
 class Product extends Model
 {
     use SoftDeletes;
+
+    public $transformer = ProductTransformer::class;
 
     const DISK_STORAGE = 'images_products';
 
