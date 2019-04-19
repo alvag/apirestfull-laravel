@@ -13,10 +13,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property mixed seller
  * @property mixed quantity
  * @property mixed id
+ * @property mixed image
  */
 class Product extends Model
 {
     use SoftDeletes;
+
+    const DISK_STORAGE = 'images_products';
 
     const PRODUCTO_DISPONIBLE = 'disponible';
     const PRODUCTO_NO_DISPONIBLE = 'no disponible';
