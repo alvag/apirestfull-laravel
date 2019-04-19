@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Observers\ProductObserver;
+use App\Observers\UserObserver;
 use App\Product;
+use App\User;
 use Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider;
 use Illuminate\Support\ServiceProvider;
 use Schema;
@@ -32,5 +34,6 @@ class AppServiceProvider extends ServiceProvider
         Schema::defaultStringLength(191);
 
         Product::observe(ProductObserver::class);
+        User::observe(UserObserver::class);
     }
 }

@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\ApiController;
+use App\Mail\UserCreated;
 use App\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Validation\ValidationException;
+use Mail;
 
 class UserController extends ApiController
 {
@@ -112,10 +114,8 @@ class UserController extends ApiController
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
      * @param User $user
-     * @return void
+     * @return Response
      * @throws Exception
      */
     public function destroy(User $user)
@@ -124,6 +124,10 @@ class UserController extends ApiController
         return $this->showOne($user);
     }
 
+    /**
+     * @param $token
+     * @return Response
+     */
     public function verify($token)
     {
         $user = User::where('verification_token', $token)->firstOrFail();
@@ -134,5 +138,24 @@ class UserController extends ApiController
 
         return $this->showMessage('La cuenta ha sido verificada');
 
+    }
+
+    /**
+     * @param User $user
+     * @return Response
+     * @throws Exception
+     */
+    public function resend(User $user)
+    {
+        if ($user->esVerificado()) {
+            return $this->errorResponse('Este usuario ya ha sido verificado.', 409);
+        }
+
+        retry(5, function () use ($user) {
+            Mail::to($user)->send(new UserCreated($user));
+        }, 1000);
+
+
+        return $this->showMessage('El correo de verificación se ha reenviado.');
     }
 }

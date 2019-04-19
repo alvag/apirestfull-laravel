@@ -9,6 +9,7 @@ use Str;
 
 /**
  * @property mixed id
+ * @property mixed email
  */
 class User extends Authenticatable
 {
