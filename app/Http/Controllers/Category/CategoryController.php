@@ -6,7 +6,7 @@ use App\Category;
 use App\Http\Controllers\ApiController;
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Response;
 use Illuminate\Validation\ValidationException;
 
 class CategoryController extends ApiController
