@@ -7,6 +7,7 @@ namespace App\Traits;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
+use Cache;
 use Illuminate\Validation\ValidationException;
 use Validator;
 use Response;
@@ -37,6 +38,7 @@ trait ApiResponser
      * @param Collection $collection
      * @param int $code
      * @return Response
+     * @throws ValidationException
      */
     protected function showAll(Collection $collection, $code = 200)
     {
@@ -47,6 +49,7 @@ trait ApiResponser
             $collection = $this->sortData($collection, $transformer);
             $collection = $this->paginate($collection);
             $collection = $this->transformData($collection, $transformer);
+            $collection = $this->cacheResponse($collection);
         } else {
             $collection = ['data' => $collection];
         }
@@ -149,6 +152,22 @@ trait ApiResponser
         $paginated->appends(request()->all());
 
         return $paginated;
+    }
+
+    protected function cacheResponse($data)
+    {
+        $url = request()->url();
+        $queryParams = request()->query();
+
+        ksort($queryParams);
+
+        $queryString = http_build_query($queryParams);
+
+        $fullUrl = "{$url}?{$queryString}";
+
+        return Cache::remember($fullUrl, 15 / 60, function () use ($data) {
+            return $data;
+        });
     }
 
 }
