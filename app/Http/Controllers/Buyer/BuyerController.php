@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Buyer;
 
 use App\Buyer;
 use App\Http\Controllers\ApiController;
-use Illuminate\Http\Response;
+use Illuminate\Validation\ValidationException;
+use Response;
 
 class BuyerController extends ApiController
 {
@@ -12,6 +13,7 @@ class BuyerController extends ApiController
      * Display a listing of the resource.
      *
      * @return Response
+     * @throws ValidationException
      */
     public function index()
     {

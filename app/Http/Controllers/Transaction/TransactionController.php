@@ -5,7 +5,8 @@ namespace App\Http\Controllers\Transaction;
 use App\Http\Controllers\ApiController;
 use App\Transaction;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Response;
+use Illuminate\Validation\ValidationException;
 
 class TransactionController extends ApiController
 {
@@ -13,6 +14,7 @@ class TransactionController extends ApiController
      * Display a listing of the resource.
      *
      * @return Response
+     * @throws ValidationException
      */
     public function index()
     {

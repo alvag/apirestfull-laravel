@@ -5,10 +5,11 @@ namespace App\Http\Controllers\Seller;
 use App\Http\Controllers\ApiController;
 use App\Product;
 use App\Seller;
+use App\Transformers\ProductTransformer;
 use App\User;
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Response;
 use Storage;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -16,11 +17,19 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 class SellerProductController extends ApiController
 {
 
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->middleware('transform.input:' . ProductTransformer::class)->only(['store', 'update']);
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @param Seller $seller
      * @return Response
+     * @throws ValidationException
      */
     public function index(Seller $seller)
     {
@@ -111,7 +120,7 @@ class SellerProductController extends ApiController
      *
      * @param Seller $seller
      * @param Product $product
-     * @return void
+     * @return Response
      * @throws Exception
      */
     public function destroy(Seller $seller, Product $product)

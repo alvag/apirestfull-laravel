@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property mixed buyer_id
  * @property mixed created_at
  * @property mixed updated_at
+ * @property mixed product
  */
 class Transaction extends Model
 {

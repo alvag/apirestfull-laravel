@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Transaction;
 use App\Http\Controllers\ApiController;
 use App\Transaction;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Response;
 
 class TransactionSellerController extends ApiController
 {

@@ -6,7 +6,8 @@ use App\Category;
 use App\Http\Controllers\ApiController;
 use App\Product;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Illuminate\Validation\ValidationException;
+use Response;
 
 class ProductCategoryController extends ApiController
 {
@@ -15,6 +16,7 @@ class ProductCategoryController extends ApiController
      *
      * @param Product $product
      * @return Response
+     * @throws ValidationException
      */
     public function index(Product $product)
     {
@@ -26,6 +28,7 @@ class ProductCategoryController extends ApiController
      * @param Product $product
      * @param Category $category
      * @return Response
+     * @throws ValidationException
      */
     public function update(Request $request, Product $product, Category $category)
     {
@@ -38,6 +41,7 @@ class ProductCategoryController extends ApiController
      * @param Product $product
      * @param Category $category
      * @return Response
+     * @throws ValidationException
      */
     public function destroy(Product $product, Category $category) {
 

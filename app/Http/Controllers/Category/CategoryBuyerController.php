@@ -5,7 +5,8 @@ namespace App\Http\Controllers\Category;
 use App\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
-use Illuminate\Http\Response;
+use Illuminate\Validation\ValidationException;
+use Response;
 
 class CategoryBuyerController extends ApiController
 {
@@ -14,6 +15,7 @@ class CategoryBuyerController extends ApiController
      *
      * @param Category $category
      * @return Response
+     * @throws ValidationException
      */
     public function index(Category $category)
     {

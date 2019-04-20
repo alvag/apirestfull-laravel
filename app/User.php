@@ -17,6 +17,7 @@ use Str;
  * @property mixed updated_at
  * @property mixed deleted_at
  * @property mixed name
+ * @property string password
  */
 class User extends Authenticatable
 {

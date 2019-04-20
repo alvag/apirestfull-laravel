@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Product;
 
 use App\Http\Controllers\ApiController;
 use App\Product;
-use Illuminate\Http\Response;
+use Illuminate\Validation\ValidationException;
+use Response;
 
 class ProductBuyerController extends ApiController
 {
@@ -13,6 +14,7 @@ class ProductBuyerController extends ApiController
      *
      * @param Product $product
      * @return Response
+     * @throws ValidationException
      */
     public function index(Product $product)
     {

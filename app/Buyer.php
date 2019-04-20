@@ -5,6 +5,9 @@ namespace App;
 use App\Scopes\BuyerScope;
 use App\Transformers\BuyerTransformer;
 
+/**
+ * @property mixed transactions
+ */
 class Buyer extends User
 {
 

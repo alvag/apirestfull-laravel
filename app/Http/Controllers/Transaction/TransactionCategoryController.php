@@ -5,7 +5,8 @@ namespace App\Http\Controllers\Transaction;
 use App\Http\Controllers\ApiController;
 use App\Transaction;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Illuminate\Validation\ValidationException;
+use Response;
 
 class TransactionCategoryController extends ApiController
 {
@@ -14,6 +15,7 @@ class TransactionCategoryController extends ApiController
      *
      * @param Transaction $transaction
      * @return Response
+     * @throws ValidationException
      */
     public function index(Transaction $transaction)
     {

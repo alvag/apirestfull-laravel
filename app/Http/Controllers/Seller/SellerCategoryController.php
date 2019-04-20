@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Seller;
 
 use App\Seller;
 use App\Http\Controllers\ApiController;
-use Illuminate\Http\Response;
+use Response;
+use Illuminate\Validation\ValidationException;
 
 class SellerCategoryController extends ApiController
 {
@@ -13,6 +14,7 @@ class SellerCategoryController extends ApiController
      *
      * @param Seller $seller
      * @return Response
+     * @throws ValidationException
      */
     public function index(Seller $seller)
     {
