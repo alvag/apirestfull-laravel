@@ -15,6 +15,7 @@ class CategoryController extends ApiController
      * Display a listing of the resource.
      *
      * @return Response
+     * @throws ValidationException
      */
     public function index()
     {
