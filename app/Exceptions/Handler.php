@@ -9,6 +9,9 @@ use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Request;
+use Illuminate\Session\TokenMismatchException;
+use Response;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
@@ -39,7 +42,7 @@ class Handler extends ExceptionHandler
     /**
      * Report or log an exception.
      *
-     * @param \Exception $exception
+     * @param Exception $exception
      * @return void
      * @throws Exception
      */
@@ -51,9 +54,9 @@ class Handler extends ExceptionHandler
     /**
      * Render an exception into an HTTP response.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \Exception $exception
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param Exception $exception
+     * @return Response
      */
     public function render($request, Exception $exception)
     {
@@ -94,6 +97,10 @@ class Handler extends ExceptionHandler
             }
         }
 
+        if ($exception instanceof TokenMismatchException) {
+            return redirect()->back()->withInput($request->input());
+        }
+
         if (config('app.debug')) {
             return parent::render($request, $exception);
         }
@@ -106,11 +113,25 @@ class Handler extends ExceptionHandler
     {
         $errors = $e->validator->errors()->getMessages();
 
+        if ($this->isFrontend($request)) {
+            return $request->ajax()
+                ? response()->json($errors, 422)
+                : redirect()->back()->withInput($request->input())->withErrors($errors);
+        }
+
         return $this->errorResponse($errors, 422);
     }
 
     protected function unauthenticated($request, AuthenticationException $exception)
     {
+        if ($this->isFrontend($request)) {
+            return redirect()->guest('login');
+        }
         return $this->errorResponse('No autenticado', 401);
+    }
+
+    private function isFrontend(Request $request)
+    {
+        return $request->acceptsHtml() && collect($request->route()->middleware())->contains('web');
     }
 }
