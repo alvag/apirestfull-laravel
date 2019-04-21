@@ -25,6 +25,7 @@ use Illuminate\Routing\Middleware\ValidateSignature;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Laravel\Passport\Http\Middleware\CheckClientCredentials;
 
 class Kernel extends HttpKernel
 {
@@ -74,17 +75,18 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'auth'            => Authenticate::class,
-        'auth.basic'      => AuthenticateWithBasicAuth::class,
-        'bindings'        => SubstituteBindings::class,
-        'cache.headers'   => SetCacheHeaders::class,
-        'can'             => Authorize::class,
-        'guest'           => RedirectIfAuthenticated::class,
-        'signed'          => ValidateSignature::class,
-        'throttle'        => ThrottleRequests::class,
-        'verified'        => EnsureEmailIsVerified::class,
-        'signature'       => SignatureMiddleware::class,
-        'transform.input' => TransformInput::class
+        'auth'               => Authenticate::class,
+        'auth.basic'         => AuthenticateWithBasicAuth::class,
+        'bindings'           => SubstituteBindings::class,
+        'cache.headers'      => SetCacheHeaders::class,
+        'can'                => Authorize::class,
+        'guest'              => RedirectIfAuthenticated::class,
+        'signed'             => ValidateSignature::class,
+        'throttle'           => ThrottleRequests::class,
+        'verified'           => EnsureEmailIsVerified::class,
+        'signature'          => SignatureMiddleware::class,
+        'transform.input'    => TransformInput::class,
+        'client.credentials' => CheckClientCredentials::class
     ];
 
     /**
